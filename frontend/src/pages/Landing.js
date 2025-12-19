@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { LANDING_OPERATORS } from '../constants/operatorLogos';
 
 const heroImages = [
   'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1920&q=80',
@@ -28,33 +29,6 @@ const services = [
     icon: '📶',
     title: 'Data Packs',
     description: 'Boost your mobile data with add-on packs from top providers.',
-  },
-];
-
-const operators = [
-  {
-    name: 'Airtel',
-    logo: 'https://logoeps.com/wp-content/uploads/2012/10/airtel-logo-vector.png',
-  },
-  {
-    name: 'Jio',
-    logo: 'https://static.realme.net/page/offer/images/Jio-194e345e69.jpg',
-  },
-  {
-    name: 'Vi',
-    logo: 'https://pnghdpro.com/wp-content/themes/pnghdpro/download/social-media-and-brands/vi-vodafone-idea-app-icon.png',
-  },
-  {
-    name: 'BSNL',
-    logo: 'https://1000logos.net/wp-content/uploads/2021/04/BSNL-logo.png',
-  },
-  {
-    name: 'Tata Sky',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/0/06/Tata_Sky_Logo.jpg',
-  },
-  {
-    name: 'Dish TV',
-    logo: 'https://1000logos.net/wp-content/uploads/2020/09/Dish-TV-Logo.png',
   },
 ];
 
@@ -130,7 +104,7 @@ const Landing = () => {
         </p>
       </div>
       <div className="landing__operators-grid">
-        {operators.map((operator) => (
+        {LANDING_OPERATORS.map((operator) => (
           <div key={operator.name} className="operator-card-new">
             <img
               src={operator.logo}

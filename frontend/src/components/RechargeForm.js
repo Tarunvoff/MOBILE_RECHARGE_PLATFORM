@@ -10,10 +10,22 @@ import OperatorCard from './OperatorCard';
 import PlanCard from './PlanCard';
 import { formatCurrency } from '../utils/helpers';
 import { SERVICE_CATALOG, getServiceDefinition } from '../constants/services';
+import { getOperatorLogo } from '../constants/operatorLogos';
 
 const paymentMethods = ['UPI', 'Card', 'Wallet'];
 
 const DEFAULT_SERVICE = SERVICE_CATALOG[0];
+
+const mapOperatorsWithLogos = (operatorList, fallbackServiceType) =>
+  (operatorList || []).map((operator) => ({
+    ...operator,
+    logo: getOperatorLogo({
+      code: operator.code,
+      name: operator.name,
+      serviceType: operator.serviceType || fallbackServiceType,
+      logo: operator.logo,
+    }),
+  }));
 
 const RechargeForm = () => {
   const navigate = useNavigate();
@@ -51,7 +63,8 @@ const RechargeForm = () => {
           setServices(serverServices);
         }
 
-        setOperators(operatorsResponse.data.data || []);
+        const operatorsData = operatorsResponse?.data?.data || [];
+        setOperators(mapOperatorsWithLogos(operatorsData, serviceType));
       } catch (err) {
         if (isMounted) {
           setError(err.message);
@@ -85,7 +98,8 @@ const RechargeForm = () => {
       try {
         const response = await fetchOperators({ serviceType: definition.id });
         if (isMounted) {
-          setOperators(response.data.data || []);
+          const operatorsData = response.data.data || [];
+          setOperators(mapOperatorsWithLogos(operatorsData, definition.id));
         }
       } catch (err) {
         if (isMounted) {
